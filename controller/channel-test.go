@@ -184,6 +184,10 @@ func testAllChannels(isNotify bool) error {
 				// 如果通道启用状态，但是返回了错误 或者 响应时间超过阈值，需要判断是否需要禁用
 				if milliseconds > disableThreshold {
 					sendMessage += fmt.Sprintf("- 响应时间 %.2fs 超过阈值 %.2fs \n\n- 禁用\n\n", float64(milliseconds)/1000.0, float64(disableThreshold)/1000.0)
+					if err == nil {
+						logger.SysLog("err is nil")
+						continue
+					}
 					DisableChannel(channel.Id, channel.Name, err.Error(), false)
 					continue
 				}
